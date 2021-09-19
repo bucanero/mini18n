@@ -49,8 +49,7 @@ int file_csv_load(mini18n_hash_t * hash, FILE * f) {
    char value[1024] = { 0 };
 
    while (fgets(buffer, 1024, f)) {
-      int i = 0, j = 0, done = 0, state = 0, empty = 1;
-      char c;
+      int done = 0, empty = 1;
 
       if ((strlen(buffer) > 3) && buffer[0] == '\"')
       {

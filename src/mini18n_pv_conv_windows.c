@@ -17,6 +17,8 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 */
 
+#ifdef _WIN32
+
 #include "mini18n.h"
 #include "mini18n_pv_conv_windows.h"
 #include <windows.h>
@@ -34,3 +36,5 @@ mini18n_conv_t mini18n_conv_windows_utf16 = {
 	&mini18n_wcs,
 	conv_windows_utf16
 };
+
+#endif
