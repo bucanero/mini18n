@@ -110,5 +110,6 @@ int file_yts_load(mini18n_hash_t * hash, FILE * f) {
 }
 
 mini18n_file_t mini18n_file_yts = {
-	file_yts_load
+	file_yts_load,
+	"yts"
 };

@@ -86,5 +86,6 @@ int file_csv_load(mini18n_hash_t * hash, FILE * f) {
 }
 
 mini18n_file_t mini18n_file_csv = {
-	file_csv_load
+	file_csv_load,
+	"csv"
 };

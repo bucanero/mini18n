@@ -21,13 +21,15 @@
 #include "mini18n_pv_file.h"
 #include "mini18n_pv_file_yts.h"
 #include "mini18n_pv_file_csv.h"
+#include "mini18n_pv_file_po.h"
 
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 
 static mini18n_file_t * loaders[] = {
-   &mini18n_file_csv,
+	&mini18n_file_po,
+	&mini18n_file_csv,
 	&mini18n_file_yts,
 	NULL
 };
@@ -101,9 +103,13 @@ unsigned int mini18n_hash_func(mini18n_hash_t * hash, const char * key) {
 mini18n_hash_t * mini18n_hash_from_file(const char * filename) {
 	mini18n_hash_t * hash;
 	FILE * f;
-	mini18n_file_t * file;
+	char * ext;
 
 	if (filename == NULL)
+		return NULL;
+
+	ext = strrchr(filename, '.');
+	if (ext == NULL)
 		return NULL;
 
 	hash = mini18n_hash_init(&mini18n_str);
@@ -116,13 +122,12 @@ mini18n_hash_t * mini18n_hash_from_file(const char * filename) {
 		return NULL;
 	}
 
-	file = *loaders;
-	while(file != NULL) {
-		if (file->load(hash, f) == 0) {
+	for (int i = 0; loaders[i] != NULL; i++) {
+		if (strcasecmp(loaders[i]->type, ext+1) == 0) {
+			loaders[i]->load(hash, f);
 			fclose(f);
 			return hash;
 		}
-		file++;
 	}
 
 	fclose(f);

@@ -82,7 +82,10 @@ int file_po_load(mini18n_hash_t * hash, FILE * f) {
 					}
 
 					if (!strncmp(c, "msgid", 5)) {
-						mini18n_hash_add(hash, key, value);
+						// skip untranslated empty strings
+						if (key[0] && value[0]) {
+							mini18n_hash_add(hash, key, value);
+						}
 						i = 0;
 						state = 1;
 					}
@@ -100,5 +103,6 @@ int file_po_load(mini18n_hash_t * hash, FILE * f) {
 }
 
 mini18n_file_t mini18n_file_po = {
-	file_po_load
+	file_po_load,
+	"po"
 };

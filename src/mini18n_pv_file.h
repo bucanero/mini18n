@@ -27,6 +27,7 @@ typedef struct _mini18n_file_t mini18n_file_t;
 
 struct _mini18n_file_t {
 	int (*load)(mini18n_hash_t *, FILE *);
+	const char * type;
 };
 
 #endif
